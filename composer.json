@@ -23,13 +23,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Lasallesoftware\\Contactformfrontendfrontend\\": "src/"
+            "Lasallesoftware\\Contactformfrontend\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Lasallesoftware\\Contactform\\ContactformfrontendServiceProvider"
+                "Lasallesoftware\\Contactformfrontend\\ContactformfrontendServiceProvider"
             ]
         }
     },
