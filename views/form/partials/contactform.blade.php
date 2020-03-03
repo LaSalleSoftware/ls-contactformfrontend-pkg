@@ -5,7 +5,7 @@
 >
 
     <h1 class="text-left md:text-center font-bold break-normal text-3xl md:text-5xl">
-            {{ __('lasallesoftwarecontactform::contactform.page_title_contactformpartial') }}
+            {{ __('lasallesoftwarecontactformfrontend::contactformfrontend.page_title_contactformpartial') }}
             </h1>
 
 
@@ -19,7 +19,7 @@
                     class="block uppercase tracking-wide text-purple-900 text-xs font-bold mb-2" 
                     for="first_name"
                 >
-                {{ __('lasallesoftwarecontactform::contactform.label_first_name') }}
+                {{ __('lasallesoftwarecontactformfrontend::contactformfrontend.label_first_name') }}
                 </label>
 
                 @error('first_name')
@@ -43,7 +43,7 @@
                     class="block uppercase tracking-wide text-purple-900 text-xs font-bold mb-2" 
                     for="surname"
                 >
-                {{ __('lasallesoftwarecontactform::contactform.label_surname') }}
+                {{ __('lasallesoftwarecontactformfrontend::contactformfrontend.label_surname') }}
                 </label>
 
                 @error('surname')
@@ -67,7 +67,7 @@
                     class="block uppercase tracking-wide text-purple-900 text-xs font-bold mb-2" 
                     for="email"
                 >
-                {{ __('lasallesoftwarecontactform::contactform.label_email') }}
+                {{ __('lasallesoftwarecontactformfrontend::contactformfrontend.label_email') }}
                 </label>
 
                 @error('email')
@@ -91,7 +91,7 @@
                     class="block uppercase tracking-wide text-purple-900 text-xs font-bold mb-2" 
                     for="comment"
                 >
-                {{ __('lasallesoftwarecontactform::contactform.label_comment') }}
+                {{ __('lasallesoftwarecontactformfrontend::contactformfrontend.label_comment') }}
                 </label>
 
                 @error('comment')
@@ -116,7 +116,7 @@
 
         <div class="w-full block capitalize tracking-wide text-purple-900 font-bold text-lg mb-2 ">
 
-            {{ __('lasallesoftwarecontactform::contactform.label_question') }} {{ $question['first_number'] }} + {{ $question['second_number'] }}? 
+            {{ __('lasallesoftwarecontactformfrontend::contactformfrontend.label_question') }} {{ $question['first_number'] }} + {{ $question['second_number'] }}? 
 
                 <input type="hidden" id="first_number" name="first_number" value="{{ $question['first_number'] }}">
                 <input type="hidden" id="second_number" name="second_number" value="{{ $question['second_number'] }}">
@@ -136,7 +136,7 @@
                     class="shadow bg-purple-900 hover:bg-purple-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                     type="submit"
                 >
-                {{ __('lasallesoftwarecontactform::contactform.button_submit_contactformpartial') }}
+                {{ __('lasallesoftwarecontactformfrontend::contactformfrontend.button_submit_contactformpartial') }}
                 </button>
             </div>
             <div class="md:w-2/3"></div>
@@ -144,3 +144,4 @@
 
     </div>    
 </form>
+<br />

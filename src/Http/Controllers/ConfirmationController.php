@@ -53,7 +53,7 @@ class ConfirmationController extends CommonController
 
         // if the security answer is wrong, go back to the contact form and try again
         if ($input['security_answer'] != $this->getSecurityAnswer($input['first_number'], $input['second_number'])) {
-            Session::flash('securityquestioniswrong', __('lasallesoftwarecontactform::contactform.security_question_error_message'));
+            Session::flash('securityquestioniswrong', __('lasallesoftwarecontactformfrontend::contactformfrontend.security_question_error_message'));
             return back()->withInput();    
         }
 
@@ -73,7 +73,7 @@ class ConfirmationController extends CommonController
         $sanitizedInput['uuid']       = $input['uuid'];
 
         // if the email exists in the "personbydomains" database field, then get the personbydomains' id
-        $sanitizedInput['personbydomains_id'] = $this->getPersonbydomainsId($sanitizedInput['email']);
+        $sanitizedInput['personbydomain_id'] = $this->getPersonbydomainId($sanitizedInput['email']);
 
         // dispatch the database job
         if (config('lasallesoftware-contactformfrontend.insert_contact_form_info_into_the_database')) {
@@ -81,16 +81,16 @@ class ConfirmationController extends CommonController
         }
 
         // dispatch the email job
-        Mail::to(config('lasallesoftware-contactformfrontend.to_recipients'))
+        /*Mail::to(config('lasallesoftware-contactformfrontend.to_recipients'))
             ->cc(config('lasallesoftware-contactformfrontend.cc_recipients'))
             ->bcc(config('lasallesoftware-contactformfrontend.bcc_recipients'))
             ->queue(new EmailAdmin($sanitizedInput))
-        ;
+        ;*/
 
         // display confirmation view
-        return view(config('lasallesoftware-contactformfrontend.what_package_are_the_view_files') . 'form.confirmation')
+        /*return view(config('lasallesoftware-contactformfrontend.what_package_are_the_view_files') . 'form.confirmation')
             ->with(['formInput' => $sanitizedInput])
-        ;    
+        ; */   
     }
 
     /**
@@ -106,12 +106,12 @@ class ConfirmationController extends CommonController
     }
 
     /**
-     * Get the personbydomains' ID given the email address. 
+     * Get the personbydomains' ID given an email address. 
      * 
      * @param  string  $email
      * @return mixed 
      */
-    public function getPersonbydomainsId($email)
+    public function getPersonbydomainId($email)
     {
         return DB::table('personbydomains')
             ->where('email', $email)

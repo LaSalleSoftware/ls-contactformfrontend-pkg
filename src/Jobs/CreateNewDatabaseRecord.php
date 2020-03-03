@@ -22,8 +22,8 @@
 
 namespace Lasallesoftware\Contactformfrontend\Jobs;
 
-// LaSalle Software
-use Lasallesoftware\Contactformbackend\Models\Contact_form;
+// LaSalle Softare
+use Lasallesoftware\Library\Common\Http\Controllers\CommonControllerForClients;
 
 // Laravel classes
 use Illuminate\Bus\Queueable;
@@ -32,6 +32,11 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Class CreateNewDatabaseRecord
+ *
+ * @package Lasallesoftware\Contactformfrontend\Jobs\CreateNewDatabaseRecord
+ */
 class CreateNewDatabaseRecord implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -52,11 +57,27 @@ class CreateNewDatabaseRecord implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @param  Contact_form  $contact_form
      * @return void
      */
-    public function handle(Contact_form $contact_form)
+    public function handle(CommonControllerForClients $commoncontrollerforclients)
     {
-        $contact_form->createNewContactformRecord($this->data); 
+
+        /*echo "the uuid = " . $this->data['uuid'];
+        echo "<pre>";
+        print_r($this->data);
+        dd();*/
+
+        $path = 'contactformfrontendcreatedatabaserecord';
+
+        echo "path = " . $path;
+        
+
+        $response = $commoncontrollerforclients->sendRequestToLasalleBackend($this->data['uuid'], $path); 
+
+        $body           = json_decode($response->getBody());
+
+        echo "<pre>";
+        var_dump($body);
+        dd();
     }
 }

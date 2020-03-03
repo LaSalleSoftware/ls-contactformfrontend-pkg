@@ -4,7 +4,7 @@
 
     {{-- START: Contact Form --}}
     <div class="m-10">
-        @include('lasallesoftwarecontactform::form.partials.contactform')
+        @include('lasallesoftwarecontactformfrontend::form.partials.contactform')
     </div>
     {{-- END: Contact Form --}}
             

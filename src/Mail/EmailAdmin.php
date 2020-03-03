@@ -65,7 +65,7 @@ class EmailAdmin extends Mailable
         return $this->subject(config('lasallesoftware-contactformfrontend.subject'))
                     ->from(config('lasallesoftware-contactformfrontend.from_email_address'), config('lasallesoftware-contactformfrontend.from_name'))
                     ->replyTo($this->formData['email'], $this->formData['first_name'] . ' ' . $this->formData['surname'])
-                    ->view('lasallesoftwarecontactform::emails.sendtoadmin')->with(['formData' => $this->formData])
+                    ->view('lasallesoftwarecontactformfrontend::emails.sendtoadmin')->with(['formData' => $this->formData])
         ;
     }
 }

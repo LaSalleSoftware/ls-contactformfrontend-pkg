@@ -60,7 +60,6 @@ class ContactformfrontendServiceProvider extends ServiceProvider
     {
         $this->publishConfig();
         $this->loadRoutes();
-        $this->loadMigrations();
         $this->loadTranslations();
         $this->loadViews();
     }
@@ -85,15 +84,7 @@ class ContactformfrontendServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../routes/contactformfrontend.php');
     }
 
-    /**
-     * Load this package's migrations.
-     */
-    protected function loadMigrations()
-    {
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-    }
-
-    /**
+     /**
      * Load this package's translations
      *
      * @return void
