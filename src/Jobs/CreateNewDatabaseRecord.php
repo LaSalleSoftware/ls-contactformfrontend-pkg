@@ -23,7 +23,8 @@
 namespace Lasallesoftware\Contactformfrontend\Jobs;
 
 // LaSalle Softare
-use Lasallesoftware\Library\Common\Http\Controllers\CommonControllerForClients;
+use Lasallesoftware\Contactformfrontend\Helpers\APIRequestsToTheBackendHelper;
+use Lasallesoftware\Library\APIRequestsToTheBackend\HttpRequestToAdminBackend;
 
 // Laravel classes
 use Illuminate\Bus\Queueable;
@@ -41,6 +42,14 @@ class CreateNewDatabaseRecord implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    use APIRequestsToTheBackendHelper, HttpRequestToAdminBackend;
+
+
+    /**
+     * Contact form input data.
+     *
+     * @var array
+     */
     protected $data;
 
     /**
@@ -59,25 +68,13 @@ class CreateNewDatabaseRecord implements ShouldQueue
      *
      * @return void
      */
-    public function handle(CommonControllerForClients $commoncontrollerforclients)
+    public function handle()
     {
+        $uuid         = $this->data['uuid'];
+        $endpointPath = $this->getEndpointPath('CreateNewDatabaseRecord');
+        $httpRequest  = 'POST';
+        $data         = $this->data;
 
-        /*echo "the uuid = " . $this->data['uuid'];
-        echo "<pre>";
-        print_r($this->data);
-        dd();*/
-
-        $path = 'contactformfrontendcreatedatabaserecord';
-
-        echo "path = " . $path;
-        
-
-        $response = $commoncontrollerforclients->sendRequestToLasalleBackend($this->data['uuid'], $path); 
-
-        $body           = json_decode($response->getBody());
-
-        echo "<pre>";
-        var_dump($body);
-        dd();
+        $response = $this->sendRequestToLasalleBackend($uuid, $endpointPath, $httpRequest, null, $data);
     }
 }
