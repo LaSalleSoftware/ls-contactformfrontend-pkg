@@ -1,10 +1,12 @@
+<div class="flex flex-wrap -mx-3 mb-6 md:justify-center">
+
 <form 
-    class="w-full max-w-lg bg-white border-solid border-purple-900 border-2 rounded"
+    class="w-full max-w-lg bg-white border-solid border-purple-900 border-2 rounded-lg"
     action="{{ config('app.url') }}/contactform/confirmation"
     method="post"
 >
 
-    <h1 class="text-left md:text-center font-bold break-normal text-3xl md:text-5xl">
+    <h1 class="text-left text-center font-bold break-normal text-3xl md:text-5xl">
             {{ __('lasallesoftwarecontactformfrontend::contactformfrontend.page_title_contactformpartial') }}
             </h1>
 
@@ -27,6 +29,7 @@
                 @enderror
 
                 <input 
+                    
                     class="appearance-none block w-full bg-purple-100 text-purple-900 border border-purple-900 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white font-bold" 
                     id="first_name"
                     name="first_name"
@@ -143,5 +146,7 @@
         </div>
 
     </div>    
-</form>
+</form
+
+</div>
 <br />

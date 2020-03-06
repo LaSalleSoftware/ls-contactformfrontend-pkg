@@ -84,11 +84,11 @@ class ConfirmationController extends CommonController
         }
 
         // dispatch the email job
-        /*Mail::to(config('lasallesoftware-contactformfrontend.to_recipients'))
+        Mail::to(config('lasallesoftware-contactformfrontend.to_recipients'))
             ->cc(config('lasallesoftware-contactformfrontend.cc_recipients'))
             ->bcc(config('lasallesoftware-contactformfrontend.bcc_recipients'))
             ->queue(new EmailAdmin($sanitizedInput))
-        ;*/
+        ;
 
         // display confirmation view
         return view(config('lasallesoftware-contactformfrontend.what_package_are_the_view_files') . 'form.confirmation')

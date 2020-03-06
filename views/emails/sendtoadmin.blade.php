@@ -1,10 +1,13 @@
-This is the sendtoemail.blade.php!!! 
+[{{ __('lasallesoftwarecontactformfrontend::contactformfrontend.email_automated_msg') }}]
 <br /><br />
-{{ __('lasallesoftwarecontactformfrontend::contactformfrontend.email_first_name') }}:    {{ $formData['first_name'] }}<br />
-{{ __('lasallesoftwarecontactformfrontend::contactformfrontend.email_surname') }}:       {{ $formData['surname'] }}   <br />
-{{ __('lasallesoftwarecontactformfrontend::contactformfrontend.email_email') }}:          {{ $formData['email'] }}     <br />
-{{ __('lasallesoftwarecontactformfrontend::contactformfrontend.email_contactformid') }}: {{ $formData['uuid'] }}      <br />
+{{ __('lasallesoftwarecontactformfrontend::contactformfrontend.email_first_name') }}:    {{ $formData['first_name'] }}
 <br /><br />
+{{ __('lasallesoftwarecontactformfrontend::contactformfrontend.email_surname') }}:       {{ $formData['surname'] }}
+<br /><br />
+{{ __('lasallesoftwarecontactformfrontend::contactformfrontend.email_email') }}:          {{ $formData['email'] }}
+<br /><br />
+{{ __('lasallesoftwarecontactformfrontend::contactformfrontend.email_contactformid') }}: {{ $formData['uuid'] }}    
+<br /><br /><br />
 {{ __('lasallesoftwarecontactformfrontend::contactformfrontend.email_comment') }}:<br />
 <pre>
 {{ $formData['comment'] }}

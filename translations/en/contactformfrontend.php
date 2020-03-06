@@ -40,7 +40,9 @@ return [
     'email_email'         => 'Email Address',
     'email_comment'       => 'Comments',
     'email_contactformid' => 'Contact Form ID',
+    'email_automated_msg'  => 'This is an automated email sent by your contact form.',  
 
     // Confirmation View
-    'page_title_confirmation'  => 'Contact Form\'s Confirmation',
+    'page_title_confirmation'  => 'Thank you for getting in touch!',
+        
 ];
