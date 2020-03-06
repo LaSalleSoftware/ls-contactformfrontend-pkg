@@ -76,19 +76,21 @@ class ConfirmationController extends CommonController
         $sanitizedInput['personbydomain_id'] = $this->getPersonbydomainId($sanitizedInput['email']);
 
         // get the installed_domain_id
-        $sanitizedInput['installed_domain_id'] = $this->getInstalled_domain_id();
+            $sanitizedInput['installed_domain_id'] = $this->getInstalled_domain_id();
 
         // dispatch the database job
-        if (config('lasallesoftware-contactformfrontend.insert_contact_form_info_into_the_database')) {
+        if (config('lasallesoftware-contactformfrontend.allow_database_insertion')) {
             CreateNewDatabaseRecord::dispatch($sanitizedInput);
         }
 
         // dispatch the email job
-        Mail::to(config('lasallesoftware-contactformfrontend.to_recipients'))
-            ->cc(config('lasallesoftware-contactformfrontend.cc_recipients'))
-            ->bcc(config('lasallesoftware-contactformfrontend.bcc_recipients'))
-            ->queue(new EmailAdmin($sanitizedInput))
-        ;
+        if (config('lasallesoftware-contactformfrontend.allow_to_send_email')) {
+            Mail::to(config('lasallesoftware-contactformfrontend.to_recipients'))
+                ->cc(config('lasallesoftware-contactformfrontend.cc_recipients'))
+                ->bcc(config('lasallesoftware-contactformfrontend.bcc_recipients'))
+                ->queue(new EmailAdmin($sanitizedInput))
+            ;
+        }
 
         // display confirmation view
         return view(config('lasallesoftware-contactformfrontend.what_package_are_the_view_files') . 'form.confirmation')
