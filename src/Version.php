@@ -36,7 +36,7 @@ class Version
      *
      * @var string
      */
-    const RELEASEDATE = 'February 28, 2020';
+    const RELEASEDATE = 'April 17, 2020';
 
     /**
      * This package's name.
