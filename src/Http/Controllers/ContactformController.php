@@ -24,8 +24,7 @@ namespace Lasallesoftware\Contactformfrontend\Http\Controllers;
 
 // LaSalle Software
 use Lasallesoftware\Contactformfrontend\SecurityQuestionhelper;
-use Lasallesoftware\Library\Common\Http\Controllers\CommonController;
-use Lasallesoftware\Library\UniversallyUniqueIDentifiers\UuidGenerator;
+use Lasallesoftware\Librarybackend\Common\Http\Controllers\CommonController;
 
 /**
  * This is the controller that displays the contact form, when the contact form is a separate view with its own route.
@@ -35,32 +34,12 @@ use Lasallesoftware\Library\UniversallyUniqueIDentifiers\UuidGenerator;
 class ContactformController extends CommonController
 {
     /**
-     * @var Lasallesoftware\Library\UniversallyUniqueIDentifiers\UuidGenerator
-     */
-    protected $uuidGenerator;
-
-    /**
-     * @param  UuidGenerator  $uuidGenerator
-     */
-    public function __construct(UuidGenerator  $uuidGenerator)
-    {
-        $this->uuidGenerator = $uuidGenerator;
-    }
-
-    /**
      * Receive the input of the contact form, and display the intermediate security view
      *
      * @return void
      */
     public function HandleContactForm(SecurityQuestionhelper $securityQuestionhelper)
     {
-        // UUID
-        $comment = "Created by " 
-            . config('lasallesoftware-library.lasalle_app_domain_name') 
-            . "'s Lasallesoftware\Contactformfrontend\Http\Controllers\ContactformController"
-        ;
-        $uuid = $this->uuidGenerator->createUuid(10, $comment, 1);
-
         // prepare security question
         $question['first_number']  = random_int(1, 9);
         $question['second_number'] = random_int(1, 9);
