@@ -25,7 +25,7 @@ namespace Lasallesoftware\Contactformfrontend\Http\Controllers;
 // LaSalle Software
 use Lasallesoftware\Contactformfrontend\Jobs\CreateNewDatabaseRecord;
 use Lasallesoftware\Contactformfrontend\Mail\EmailAdmin;
-use Lasallesoftware\librarybackend\Common\Http\Controllers\CommonController;
+use Lasallesoftware\Libraryfrontend\Common\Http\Controllers\CommonController;
 
 // Laravel facades
 use Illuminate\Support\Facades\DB;
@@ -66,11 +66,10 @@ class ConfirmationController extends CommonController
         ]);
 
         // do a quick sanitize
-        $sanitizedInput['first_name'] = ucwords($this->quickSanitize($input['first_name']));
-        $sanitizedInput['surname']    = ucwords($this->quickSanitize($input['surname']));
-        $sanitizedInput['email']      = strtolower($this->quickSanitize($input['email']));
-        $sanitizedInput['comment']    = $this->quickSanitize($input['comment']);
-        $sanitizedInput['uuid']       = $input['uuid'];
+        $sanitizedInput['first_name'] = ucwords(trim(strip_tags($input['first_name'])));
+        $sanitizedInput['surname']    = ucwords(trim(strip_tags($input['surname'])));
+        $sanitizedInput['email']      = strtolower(trim(strip_tags($input['email'])));
+        $sanitizedInput['comment']    = trim(strip_tags($input['comment']));
 
         // if the email exists in the "personbydomains" database field, then get the personbydomains' id
         $sanitizedInput['personbydomain_id'] = $this->getPersonbydomainId($sanitizedInput['email']);

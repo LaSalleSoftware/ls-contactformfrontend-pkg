@@ -24,7 +24,7 @@ namespace Lasallesoftware\Contactformfrontend\Http\Controllers;
 
 // LaSalle Software
 use Lasallesoftware\Contactformfrontend\SecurityQuestionhelper;
-use Lasallesoftware\Librarybackend\Common\Http\Controllers\CommonController;
+use Lasallesoftware\Libraryfrontend\Common\Http\Controllers\CommonController;
 
 /**
  * This is the controller that displays the contact form, when the contact form is a separate view with its own route.
@@ -47,7 +47,6 @@ class ContactformController extends CommonController
         // display the contact form
         return view(config('lasallesoftware-contactformfrontend.what_package_are_the_view_files') . 'form.contactform', [
             'question' => $question,
-            'uuid'     => $uuid,
         ]);
     }    
 }

@@ -110,9 +110,6 @@
             </div>
         </div>
 
-        <input type="hidden" id="uuid" name="uuid" value="{{ $uuid }}">
-
-
         @if (session('securityquestioniswrong'))
             <div class="text-red-900 font-extrabold">[{{ session('securityquestioniswrong')  }}]</div>
         @endif

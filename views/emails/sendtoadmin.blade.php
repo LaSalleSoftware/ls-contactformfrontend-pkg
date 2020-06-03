@@ -5,8 +5,6 @@
 {{ __('lasallesoftwarecontactformfrontend::contactformfrontend.email_surname') }}:       {{ $formData['surname'] }}
 <br /><br />
 {{ __('lasallesoftwarecontactformfrontend::contactformfrontend.email_email') }}:          {{ $formData['email'] }}
-<br /><br />
-{{ __('lasallesoftwarecontactformfrontend::contactformfrontend.email_contactformid') }}: {{ $formData['uuid'] }}    
 <br /><br /><br />
 {{ __('lasallesoftwarecontactformfrontend::contactformfrontend.email_comment') }}:<br />
 <pre>
