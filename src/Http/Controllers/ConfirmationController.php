@@ -25,7 +25,7 @@ namespace Lasallesoftware\Contactformfrontend\Http\Controllers;
 // LaSalle Software
 use Lasallesoftware\Contactformfrontend\Jobs\CreateNewDatabaseRecord;
 use Lasallesoftware\Contactformfrontend\Mail\EmailAdmin;
-use Lasallesoftware\Library\Common\Http\Controllers\CommonController;
+use Lasallesoftware\librarybackend\Common\Http\Controllers\CommonController;
 
 // Laravel facades
 use Illuminate\Support\Facades\DB;

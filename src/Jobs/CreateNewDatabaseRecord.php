@@ -24,7 +24,7 @@ namespace Lasallesoftware\Contactformfrontend\Jobs;
 
 // LaSalle Softare
 use Lasallesoftware\Contactformfrontend\Helpers\APIRequestsToTheBackendHelper;
-use Lasallesoftware\Library\APIRequestsToTheBackend\HttpRequestToAdminBackend;
+use Lasallesoftware\Libraryfrontend\APIRequestsToTheBackend\HttpRequestToAdminBackend;
 
 // Laravel classes
 use Illuminate\Bus\Queueable;
@@ -70,11 +70,10 @@ class CreateNewDatabaseRecord implements ShouldQueue
      */
     public function handle()
     {
-        $uuid         = $this->data['uuid'];
         $endpointPath = $this->getEndpointPath('CreateNewDatabaseRecord');
         $httpRequest  = 'POST';
         $data         = $this->data;
 
-        $response = $this->sendRequestToLasalleBackend($uuid, $endpointPath, $httpRequest, null, $data);
+        $response = $this->sendRequestToLasalleBackend($endpointPath, $httpRequest, null, $data);
     }
 }
