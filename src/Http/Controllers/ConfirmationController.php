@@ -28,7 +28,6 @@ use Lasallesoftware\Contactformfrontend\Mail\EmailAdmin;
 use Lasallesoftware\Libraryfrontend\Common\Http\Controllers\CommonController;
 
 // Laravel facades
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
@@ -71,11 +70,8 @@ class ConfirmationController extends CommonController
         $sanitizedInput['email']      = strtolower(trim(strip_tags($input['email'])));
         $sanitizedInput['comment']    = trim(strip_tags($input['comment']));
 
-        // if the email exists in the "personbydomains" database field, then get the personbydomains' id
-        $sanitizedInput['personbydomain_id'] = $this->getPersonbydomainId($sanitizedInput['email']);
-
-        // get the installed_domain_id
-            $sanitizedInput['installed_domain_id'] = $this->getInstalled_domain_id();
+        // send this front end app's name, so the back-end can determine the installed_domain_id to insert into the contact_form db table
+        $sanitizedInput['lasalle_app_domain_name'] = env('LASALLE_APP_DOMAIN_NAME');
 
         // dispatch the database job
         if (config('lasallesoftware-contactformfrontend.allow_database_insertion')) {
@@ -109,37 +105,5 @@ class ConfirmationController extends CommonController
         return $first_number + $second_number;
     }
 
-    /**
-     * Get the personbydomains' ID given an email address. 
-     * 
-     * Return the value of 0 when no personbydomain_id is found because a null or blank value does not 
-     * transmit via post. 
-     * See Lasallesoftware\Contactformbackend\Http\Controllers\CreateDatabaseRecordController::HandleCreateDatabaseRecord()
-     * 
-     * @param  string  $email
-     * @return int 
-     */
-    public function getPersonbydomainId($email)
-    {
-        $result = DB::table('personbydomains')
-            ->where('email', $email)
-            ->get()
-        ;
-
-        return ($result->isEmpty()) ? 0 : $result[0]->id;
-    }
     
-    /**
-     * Get the installed_domain_id from the installed_domains db table for this front-end app.  
-     * 
-     * @return mixed 
-     */
-    public function getInstalled_domain_id()
-    {
-        return DB::table('installed_domains')
-            ->where('title', env('LASALLE_APP_DOMAIN_NAME'))
-            ->pluck('id')
-            ->first()
-        ;
-    }
 }
