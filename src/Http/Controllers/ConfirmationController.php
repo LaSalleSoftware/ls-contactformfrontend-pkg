@@ -27,6 +27,9 @@ use Lasallesoftware\Contactformfrontend\Jobs\CreateNewDatabaseRecord;
 use Lasallesoftware\Contactformfrontend\Mail\EmailAdmin;
 use Lasallesoftware\Libraryfrontend\Common\Http\Controllers\CommonController;
 
+// Laravel Framework
+use Illuminate\Support\Str;
+
 // Laravel facades
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
@@ -70,16 +73,18 @@ class ConfirmationController extends CommonController
         $sanitizedInput['email']      = strtolower(trim(strip_tags($input['email'])));
         $sanitizedInput['comment']    = trim(strip_tags($input['comment']));
 
+        $sanitizedInput['comment'] .= $this->isContainsRejectedText($sanitizedInput['comment']);
+
         // send this front end app's name, so the back-end can determine the installed_domain_id to insert into the contact_form db table
         $sanitizedInput['lasalle_app_domain_name'] = env('LASALLE_APP_DOMAIN_NAME');
 
         // dispatch the database job
-        if (config('lasallesoftware-contactformfrontend.allow_database_insertion')) {
+        if (config('lasallesoftware-contactformfrontend.allow_database_insertion') && (!$this->isContainsRejectedText($sanitizedInput['comment']))) {
             CreateNewDatabaseRecord::dispatch($sanitizedInput);
         }
 
         // dispatch the email job
-        if (config('lasallesoftware-contactformfrontend.allow_to_send_email')) {
+        if (config('lasallesoftware-contactformfrontend.allow_to_send_email') && (!$this->isContainsRejectedText($sanitizedInput['comment'])) ) {
             Mail::to(config('lasallesoftware-contactformfrontend.to_recipients'))
                 ->cc(config('lasallesoftware-contactformfrontend.cc_recipients'))
                 ->bcc(config('lasallesoftware-contactformfrontend.bcc_recipients'))
@@ -105,5 +110,14 @@ class ConfirmationController extends CommonController
         return $first_number + $second_number;
     }
 
-    
+    /**
+     * Does the contact form's message contain certain words/phrases?
+     *
+     * @param  string       $text                The contact form's content field
+     * @return boolean
+     */
+    public function isContainsRejectedText($text)
+    {
+        return Str::contains($text, config('lasallesoftware-contactformfrontend.words_and_phrases_that_cause_contact_form_processing_to_stop'));
+    }    
 }
