@@ -118,6 +118,6 @@ class ConfirmationController extends CommonController
      */
     public function isContainsRejectedText($text)
     {
-        return Str::contains($text, config('lasallesoftware-contactformfrontend.words_and_phrases_that_cause_contact_form_processing_to_stop'));
+        return Str::contains(strtolower($text), config('lasallesoftware-contactformfrontend.words_and_phrases_that_cause_contact_form_processing_to_stop'));
     }    
 }
