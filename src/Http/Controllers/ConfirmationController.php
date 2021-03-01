@@ -73,18 +73,22 @@ class ConfirmationController extends CommonController
         $sanitizedInput['email']      = strtolower(trim(strip_tags($input['email'])));
         $sanitizedInput['comment']    = trim(strip_tags($input['comment']));
 
-        $sanitizedInput['comment'] .= $this->isContainsRejectedText($sanitizedInput['comment']);
 
         // send this front end app's name, so the back-end can determine the installed_domain_id to insert into the contact_form db table
         $sanitizedInput['lasalle_app_domain_name'] = env('LASALLE_APP_DOMAIN_NAME');
 
+
+        // should further processing halt due to inputs failing filtering?
+        $rejectProcessingDueToFilters = $this->isRejectedDueToFilters($sanitizedInput);
+
+
         // dispatch the database job
-        if (config('lasallesoftware-contactformfrontend.allow_database_insertion') && (!$this->isContainsRejectedText($sanitizedInput['comment']))) {
+        if (config('lasallesoftware-contactformfrontend.allow_database_insertion') && (! $rejectProcessingDueToFilters)) {
             CreateNewDatabaseRecord::dispatch($sanitizedInput);
         }
 
         // dispatch the email job
-        if (config('lasallesoftware-contactformfrontend.allow_to_send_email') && (!$this->isContainsRejectedText($sanitizedInput['comment'])) ) {
+        if (config('lasallesoftware-contactformfrontend.allow_to_send_email') && (! $rejectProcessingDueToFilters)) {
             Mail::to(config('lasallesoftware-contactformfrontend.to_recipients'))
                 ->cc(config('lasallesoftware-contactformfrontend.cc_recipients'))
                 ->bcc(config('lasallesoftware-contactformfrontend.bcc_recipients'))
@@ -110,6 +114,56 @@ class ConfirmationController extends CommonController
         return $first_number + $second_number;
     }
 
+
+    public function isRejectedDueToFilters($sanitizedInput)
+    {
+        if ( $this->isContainsRejectedEmail($sanitizedInput['email']) ) {
+            return true;
+        }
+
+        if ( $this->isContainsRejectedText($sanitizedInput['comment']) ) {
+            return true;
+        }
+
+        return false;
+    }
+    
+    /**
+     * Reject the email address?
+     * 
+     * @param  string       $email                The contact form's email address field
+     */
+    public function isContainsRejectedEmail($email)
+    {
+        $rejectTLD = ['ru', 'cn'];
+
+        $tld = substr($email, -2);
+
+        return Str::contains( strtolower($tld), $rejectTLD );
+    }
+
+    private function rejectedTLD()
+    {
+        return [
+            'cn',
+            'ru',
+            'su',
+            'bid',
+            'click',
+            'diet',
+            'download',            
+            'link',
+            'party',
+            'review',
+            'science',
+            'stream',
+            'xyz',
+            'zip',
+        ];
+    }
+
+
+
     /**
      * Does the contact form's message contain certain words/phrases?
      *
@@ -118,6 +172,72 @@ class ConfirmationController extends CommonController
      */
     public function isContainsRejectedText($text)
     {
-        return Str::contains(strtolower($text), config('lasallesoftware-contactformfrontend.words_and_phrases_that_cause_contact_form_processing_to_stop'));
-    }    
+        if ( Str::contains(strtolower($text), config('lasallesoftware-contactformfrontend.words_and_phrases_that_cause_contact_form_processing_to_stop')) ) {
+            return true;
+        }
+
+        if ( Str::contains(strtolower($text), $this->rejectedWords()) ) {
+            return true;
+        }
+
+        foreach ($this->rejectedSubstrings() as $rejectedSubstring) {
+            if (str_contains($text, $rejectedSubstring)) {
+                return true;
+            }
+        }        
+
+        return false;
+    }
+
+    private function rejectedWords()
+    {
+        // must be lower case
+
+        return [
+            'agency',
+            'babylon',
+            'belarus',
+            'bitcoin',
+            'cyclist',
+            'distributors',
+            'domain',
+            'einkommen',
+            'erectile',
+            'erection',
+            'fake id',
+            'fakeid',
+            'facebook',
+            'hack',
+            'investment',
+            'investing',
+            'joint ventures',
+            'joint venture',
+            'landing page',
+            'luck',
+            'lucky',
+            'medical product',
+            'naked',
+            'neckbx',
+            'nude',
+            'passive',
+            'passives',
+            'project financing',
+            'promote',
+            'registration',
+            'reputable',       
+            'seo',
+            'settlement',
+            'urgent attention',
+            'vidnami',
+            'vidyourbiz',
+            'winning notification'
+        ];
+    }
+
+    private function rejectedSubstrings()
+    {
+        return [
+            'fuck',
+        ];
+    }
 }
