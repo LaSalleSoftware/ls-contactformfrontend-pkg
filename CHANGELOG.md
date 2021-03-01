@@ -1,6 +1,9 @@
 # CHANGE LOG
 
-## VERSION 2.4.2 (coming!)
+## VERSION 2.4.3 (coming!)
+
+## VERSION 2.4.2 (March 01, 2021)
+* [v2.4.2 issues](https://github.com/LaSalleSoftware/ls-contentformbackend-pkg/milestone/9?closed=1)
 
 ## VERSION 2.4.1 (August 22, 2020)
 * [v2.4.1 issues](https://github.com/LaSalleSoftware/ls-contentformbackend-pkg/milestone/8?closed=1)
