@@ -197,6 +197,7 @@ class ConfirmationController extends CommonController
             'agency',
             'babylon',
             'belarus',
+            'bible',
             'bitcoin',
             'cyclist',
             'distributors',
@@ -230,7 +231,8 @@ class ConfirmationController extends CommonController
             'urgent attention',
             'vidnami',
             'vidyourbiz',
-            'winning notification'
+            'winning notification',
+            'viagra'
         ];
     }
 
