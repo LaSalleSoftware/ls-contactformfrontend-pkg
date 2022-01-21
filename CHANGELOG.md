@@ -1,6 +1,9 @@
 # CHANGE LOG
 
-## VERSION 2.4.5 (coming!)
+## VERSION 2.4.6 (coming!)
+
+## VERSION 2.4.5 (January 20, 2022)
+* [v2.4.5 issues](https://github.com/LaSalleSoftware/ls-contentformbackend-pkg/milestone/12?closed=1)
 
 ## VERSION 2.4.4 (June 17, 2021)
 * [v2.4.4 issues](https://github.com/LaSalleSoftware/ls-contentformbackend-pkg/milestone/11?closed=1)
