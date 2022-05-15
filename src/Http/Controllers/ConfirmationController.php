@@ -117,11 +117,31 @@ class ConfirmationController extends CommonController
 
     public function isRejectedDueToFilters($sanitizedInput)
     {
+        if ($this->isFirstnameEqualsSurname($sanitizedInput['first_name'], $sanitizedInput['surname'])) {
+            return true;
+        }
+
         if ( $this->isContainsRejectedEmail($sanitizedInput['email']) ) {
             return true;
         }
 
         if ( $this->isContainsRejectedText($sanitizedInput['comment']) ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Reject when the first_name == surname
+     * 
+     * @param string $first_name
+     * @param string $surname
+     * @return bool 
+     */
+    public function isFirstnameEqualsSurname(string $first_name, string $surname) : bool 
+    {
+        if ($first_name == $surname) {
             return true;
         }
 
